@@ -12,11 +12,14 @@
 #include "Engine/StaticMesh.h"
 #include "Kismet/GameplayStatics.h"
 #include "Sound/SoundBase.h"
+#include "Bomba.h"
+
 
 const FName AGalaga_USFX_L01Pawn::MoveForwardBinding("MoveForward");
 const FName AGalaga_USFX_L01Pawn::MoveRightBinding("MoveRight");
 const FName AGalaga_USFX_L01Pawn::FireForwardBinding("FireForward");
 const FName AGalaga_USFX_L01Pawn::FireRightBinding("FireRight");
+
 
 AGalaga_USFX_L01Pawn::AGalaga_USFX_L01Pawn()
 {	
@@ -26,6 +29,9 @@ AGalaga_USFX_L01Pawn::AGalaga_USFX_L01Pawn()
 	RootComponent = ShipMeshComponent;
 	ShipMeshComponent->SetCollisionProfileName(UCollisionProfile::Pawn_ProfileName);
 	ShipMeshComponent->SetStaticMesh(ShipMesh.Object);
+
+	// Initialize the bomb class
+	BombaClass = ABomba::StaticClass();
 	
 	// Cache our sound effect
 	static ConstructorHelpers::FObjectFinder<USoundBase> FireAudio(TEXT("/Game/TwinStick/Audio/TwinStickFire.TwinStickFire"));
@@ -52,6 +58,9 @@ AGalaga_USFX_L01Pawn::AGalaga_USFX_L01Pawn()
 	bCanFire = true;
 
 	MyInventory = CreateDefaultSubobject<UInventoryComponent>("MyInventory");
+
+	Jumping = false;
+	DuracionSalto = 1.0f;
 }
 
 void AGalaga_USFX_L01Pawn::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
@@ -65,6 +74,9 @@ void AGalaga_USFX_L01Pawn::SetupPlayerInputComponent(class UInputComponent* Play
 	PlayerInputComponent->BindAxis(FireRightBinding);
 
 	PlayerInputComponent->BindAction("DropItem", EInputEvent::IE_Pressed, this, &AGalaga_USFX_L01Pawn::DropItem);
+	PlayerInputComponent->BindAction("Teletransportacion", EInputEvent::IE_Pressed, this, &AGalaga_USFX_L01Pawn::Teletransportacion);
+	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &AGalaga_USFX_L01Pawn::Jump);
+	PlayerInputComponent->BindAction("LanzarBomba", IE_Pressed, this, &AGalaga_USFX_L01Pawn::LanzarBomba);
 }
 
 void AGalaga_USFX_L01Pawn::Tick(float DeltaSeconds)
@@ -175,3 +187,105 @@ void AGalaga_USFX_L01Pawn::NotifyHit(UPrimitiveComponent* MyComp, AActor* Other,
 	}
 }
 
+void AGalaga_USFX_L01Pawn::TeleporTo(FVector Destination, FRotator NewRotation)
+{
+	SetActorLocation(Destination);
+}
+
+void AGalaga_USFX_L01Pawn::Jump()
+{
+	/*if (Jumping == false)
+	{
+		Jumping = true;
+		FVector JumpDirection = FVector(0, 0, 1000);
+		RootComponent->MoveComponent(JumpDirection, FRotator(0, 0, 0), true);
+	
+	}*/
+
+	if (!Jumping)
+	{
+		Jumping = true;
+
+		// Save current location of the ship before jumping
+		FVector Retorno = GetActorLocation();
+
+		// Calculate target location after jump
+		FVector JumpDirection = FVector(0, 0, 500); // Adjust jump height as needed
+		FVector TargetLocation = Retorno + JumpDirection;
+
+		// Perform the jump by moving the root component to the target location
+		RootComponent->SetWorldLocation(TargetLocation);
+
+		// Call callback function to return to original location after a certain time
+		GetWorld()->GetTimerManager().SetTimer(SaltoRetorno, this, &AGalaga_USFX_L01Pawn::RetornarSalto, DuracionSalto, false);
+	}
+}
+
+void AGalaga_USFX_L01Pawn::RetornarSalto()
+{
+	// Devuelve la nave a la posición original
+	//RootComponent->SetWorldLocation(Retorno);
+
+	// Reinicia la variable de salto
+	Jumping = false;
+
+}
+
+void AGalaga_USFX_L01Pawn::LanzarBomba()
+{
+	if (BombaClass)
+	{
+		float LaunchAngle = 25.0f;
+		float LaunchSpeed = 500.0f;
+
+		float LaunchX = LaunchSpeed * FMath::Cos(FMath::DegreesToRadians(LaunchAngle));
+		float LaunchZ = LaunchSpeed * FMath::Sin(FMath::DegreesToRadians(LaunchAngle));
+		// Spawn the bomb
+		FActorSpawnParameters SpawnParams;
+		SpawnParams.Owner = this;
+		ABomba* Bomba = GetWorld()->SpawnActor<ABomba>(BombaClass, GetActorLocation(), GetActorRotation(), SpawnParams);
+		
+		float Gravity = 9.8f;
+		float DeltaTime = 0.16f;
+		LaunchZ -= Gravity * DeltaTime;
+		Bomba->LanzarBomba(FVector(LaunchX, 0, LaunchZ));
+		// Debug messages
+		UE_LOG(LogTemp, Warning, TEXT("LaunchX: %f, LaunchZ: %f"), LaunchX, LaunchZ);
+
+	}
+}
+
+// Function to handle teleportation input
+void AGalaga_USFX_L01Pawn::Teletransportacion()
+{
+	// Example teleportation des	tination and rotation
+	FVector TeleportDestination(1000, 0, 0);
+	FRotator TeleportRotation(0, 0, 0);
+
+	// Call the teleport function
+	TeleportTo(TeleportDestination, TeleportRotation);
+}
+
+//SALTO EN EL EJE Z
+
+//if (!Jumping)
+//{
+//	Jumping = true;
+//
+//	// Save current location of the ship before jumping
+//	FVector Retorno = GetActorLocation();
+//
+//	// Calculate target location after jump
+//	//FVector JumpDirection = FVector(0, 0, 500); // Adjust jump height as needed
+//	//FVector TargetLocation = Retorno + JumpDirection;
+//
+//	const float MoveDistance = 1000.0f;
+//	const FVector  MoveDirection = GetActorForwardVector();
+//	const FVector TargetLocation = Retorno + MoveDirection * MoveDistance;
+//
+//	// Perform the jump by moving the root component to the target location
+//	RootComponent->SetWorldLocation(TargetLocation);
+//
+//	// Call callback function to return to original location after a certain time
+//	GetWorld()->GetTimerManager().SetTimer(SaltoRetorno, this, &AGalaga_USFX_L01Pawn::RetornarSalto, DuracionSalto, false);
+//}

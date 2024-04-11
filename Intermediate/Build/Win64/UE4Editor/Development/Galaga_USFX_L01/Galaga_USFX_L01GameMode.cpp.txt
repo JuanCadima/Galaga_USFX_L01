@@ -25,6 +25,12 @@ E:\Progamacion\Sis457\Galaga_USFX_L01-master\Galaga_USFX_L01-master\Source\Galag
 E:\Progamacion\Sis457\Galaga_USFX_L01-master\Galaga_USFX_L01-master\Intermediate\Build\Win64\UE4Editor\Inc\Galaga_USFX_L01\NaveEnemigaTransporte.generated.h
 E:\Progamacion\Sis457\Galaga_USFX_L01-master\Galaga_USFX_L01-master\Source\Galaga_USFX_L01\NaveEnemigaCaza.h
 E:\Progamacion\Sis457\Galaga_USFX_L01-master\Galaga_USFX_L01-master\Intermediate\Build\Win64\UE4Editor\Inc\Galaga_USFX_L01\NaveEnemigaCaza.generated.h
+E:\Progamacion\Sis457\Galaga_USFX_L01-master\Galaga_USFX_L01-master\Source\Galaga_USFX_L01\NaveEnemigaEspia.h
+E:\Progamacion\Sis457\Galaga_USFX_L01-master\Galaga_USFX_L01-master\Intermediate\Build\Win64\UE4Editor\Inc\Galaga_USFX_L01\NaveEnemigaEspia.generated.h
+E:\Progamacion\Sis457\Galaga_USFX_L01-master\Galaga_USFX_L01-master\Source\Galaga_USFX_L01\NaveEnemigaReabastecimiento.h
+E:\Progamacion\Sis457\Galaga_USFX_L01-master\Galaga_USFX_L01-master\Intermediate\Build\Win64\UE4Editor\Inc\Galaga_USFX_L01\NaveEnemigaReabastecimiento.generated.h
+E:\Progamacion\Sis457\Galaga_USFX_L01-master\Galaga_USFX_L01-master\Source\Galaga_USFX_L01\NaveEnemigaNodriza.h
+E:\Progamacion\Sis457\Galaga_USFX_L01-master\Galaga_USFX_L01-master\Intermediate\Build\Win64\UE4Editor\Inc\Galaga_USFX_L01\NaveEnemigaNodriza.generated.h
 E:\Progamacion\Sis457\Galaga_USFX_L01-master\Galaga_USFX_L01-master\Source\Galaga_USFX_L01\CapsulaEnergia.h
 E:\Progamacion\Sis457\Galaga_USFX_L01-master\Galaga_USFX_L01-master\Intermediate\Build\Win64\UE4Editor\Inc\Galaga_USFX_L01\CapsulaEnergia.generated.h
 E:\Progamacion\Sis457\Galaga_USFX_L01-master\Galaga_USFX_L01-master\Source\Galaga_USFX_L01\CapsulaProjectileSlow.h

@@ -68,6 +68,7 @@ private:
 
 	/** Handle for efficient management of ShotTimerExpired timer */
 	FTimerHandle TimerHandle_ShotTimerExpired;
+	FTimerHandle SaltoRetorno;
 
 public:
 	/** Returns ShipMeshComponent subobject **/
@@ -85,10 +86,22 @@ public:
 	UFUNCTION()
 	void TakeItem(AInventoryActor* InventoryItem);
 	UFUNCTION()
-	virtual void NotifyHit(class UPrimitiveComponent* MyComp,
-		AActor* Other, class UPrimitiveComponent* OtherComp,
-		bool bSelfMoved, FVector HitLocation, FVector
-		HitNormal, FVector NormalImpulse, const FHitResult&
+	virtual void NotifyHit(class UPrimitiveComponent* MyComp,AActor* Other, class UPrimitiveComponent* OtherComp, bool bSelfMoved, FVector HitLocation, FVector
+	HitNormal, FVector NormalImpulse, const FHitResult&
 		Hit) override;
+
+	UFUNCTION()
+	void Teletransportacion();
+	void TeleporTo(FVector Destination, FRotator NewRotation);
+
+	void Jump();
+	void RetornarSalto();
+
+	bool Jumping;
+	float DuracionSalto;
+
+	TSubclassOf<class ABomba> BombaClass;
+	void LanzarBomba();
 };
 
+ 

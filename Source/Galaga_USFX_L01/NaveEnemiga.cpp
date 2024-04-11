@@ -30,5 +30,21 @@ void ANaveEnemiga::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	if (ubicacionActual.X > LimiteSuperior) {
+		SetActorLocation(FVector(0.0f, ubicacionActual.Y, ubicacionActual.Z));
+
+
+	}
+	if (ubicacionActual.X < Limiteinferior) {
+		SetActorLocation(FVector(1530.0f, ubicacionActual.Y, ubicacionActual.Z));
+	}
+
+	if (ubicacionActual.Y > LimiteDerecho) {
+		SetActorLocation(FVector(ubicacionActual.X, 0.0f, ubicacionActual.Z));
+	}
+	if (ubicacionActual.Y < LimiteIzquierdo) {
+		SetActorLocation(FVector(ubicacionActual.X, 100.0f, ubicacionActual.Z));
+	}
+
 }
 

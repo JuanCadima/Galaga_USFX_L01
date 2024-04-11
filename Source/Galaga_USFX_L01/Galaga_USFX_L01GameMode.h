@@ -9,6 +9,9 @@
 class ANaveEnemiga;
 class ANaveEnemigaTransporte;
 class ANaveEnemigaCaza;
+class ANaveEnemigaEspia;
+class ANaveEnemigaNodriza;
+class ANaveEnemigaReabastecimiento;
 class AInventoryActor;
 class ACapsulaEnergia;
 class ACapsulaProjectileSlow;

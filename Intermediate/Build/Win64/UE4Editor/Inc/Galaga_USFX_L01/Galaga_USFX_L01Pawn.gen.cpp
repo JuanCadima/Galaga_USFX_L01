@@ -28,6 +28,13 @@ void EmptyLinkFunctionForGeneratedCodeGalaga_USFX_L01Pawn() {}
 	ENGINE_API UClass* Z_Construct_UClass_USoundBase_NoRegister();
 	GALAGA_USFX_L01_API UClass* Z_Construct_UClass_UInventoryComponent_NoRegister();
 // End Cross Module References
+	DEFINE_FUNCTION(AGalaga_USFX_L01Pawn::execTeletransportacion)
+	{
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		P_THIS->Teletransportacion();
+		P_NATIVE_END;
+	}
 	DEFINE_FUNCTION(AGalaga_USFX_L01Pawn::execNotifyHit)
 	{
 		P_GET_OBJECT(UPrimitiveComponent,Z_Param_MyComp);
@@ -65,6 +72,7 @@ void EmptyLinkFunctionForGeneratedCodeGalaga_USFX_L01Pawn() {}
 			{ "DropItem", &AGalaga_USFX_L01Pawn::execDropItem },
 			{ "NotifyHit", &AGalaga_USFX_L01Pawn::execNotifyHit },
 			{ "TakeItem", &AGalaga_USFX_L01Pawn::execTakeItem },
+			{ "Teletransportacion", &AGalaga_USFX_L01Pawn::execTeletransportacion },
 		};
 		FNativeFunctionRegistrar::RegisterFunctions(Class, Funcs, UE_ARRAY_COUNT(Funcs));
 	}
@@ -211,6 +219,28 @@ void EmptyLinkFunctionForGeneratedCodeGalaga_USFX_L01Pawn() {}
 		}
 		return ReturnFunction;
 	}
+	struct Z_Construct_UFunction_AGalaga_USFX_L01Pawn_Teletransportacion_Statics
+	{
+#if WITH_METADATA
+		static const UE4CodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
+#endif
+		static const UE4CodeGen_Private::FFunctionParams FuncParams;
+	};
+#if WITH_METADATA
+	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_AGalaga_USFX_L01Pawn_Teletransportacion_Statics::Function_MetaDataParams[] = {
+		{ "ModuleRelativePath", "Galaga_USFX_L01Pawn.h" },
+	};
+#endif
+	const UE4CodeGen_Private::FFunctionParams Z_Construct_UFunction_AGalaga_USFX_L01Pawn_Teletransportacion_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AGalaga_USFX_L01Pawn, nullptr, "Teletransportacion", nullptr, nullptr, 0, nullptr, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00020401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_AGalaga_USFX_L01Pawn_Teletransportacion_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_AGalaga_USFX_L01Pawn_Teletransportacion_Statics::Function_MetaDataParams)) };
+	UFunction* Z_Construct_UFunction_AGalaga_USFX_L01Pawn_Teletransportacion()
+	{
+		static UFunction* ReturnFunction = nullptr;
+		if (!ReturnFunction)
+		{
+			UE4CodeGen_Private::ConstructUFunction(ReturnFunction, Z_Construct_UFunction_AGalaga_USFX_L01Pawn_Teletransportacion_Statics::FuncParams);
+		}
+		return ReturnFunction;
+	}
 	UClass* Z_Construct_UClass_AGalaga_USFX_L01Pawn_NoRegister()
 	{
 		return AGalaga_USFX_L01Pawn::StaticClass();
@@ -266,6 +296,7 @@ void EmptyLinkFunctionForGeneratedCodeGalaga_USFX_L01Pawn() {}
 		{ &Z_Construct_UFunction_AGalaga_USFX_L01Pawn_DropItem, "DropItem" }, // 1474267305
 		{ &Z_Construct_UFunction_AGalaga_USFX_L01Pawn_NotifyHit, "NotifyHit" }, // 2820915263
 		{ &Z_Construct_UFunction_AGalaga_USFX_L01Pawn_TakeItem, "TakeItem" }, // 2951260232
+		{ &Z_Construct_UFunction_AGalaga_USFX_L01Pawn_Teletransportacion, "Teletransportacion" }, // 2524793801
 	};
 #if WITH_METADATA
 	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_AGalaga_USFX_L01Pawn_Statics::Class_MetaDataParams[] = {
@@ -389,7 +420,7 @@ void EmptyLinkFunctionForGeneratedCodeGalaga_USFX_L01Pawn() {}
 		}
 		return OuterClass;
 	}
-	IMPLEMENT_CLASS(AGalaga_USFX_L01Pawn, 2920451431);
+	IMPLEMENT_CLASS(AGalaga_USFX_L01Pawn, 2197455471);
 	template<> GALAGA_USFX_L01_API UClass* StaticClass<AGalaga_USFX_L01Pawn>()
 	{
 		return AGalaga_USFX_L01Pawn::StaticClass();

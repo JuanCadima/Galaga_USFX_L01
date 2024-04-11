@@ -33,6 +33,12 @@ protected:
 	float peso;
 	float volumen;
 
+	FVector ubicacionActual;
+	float Limiteinferior = -1680;
+	float LimiteSuperior = 1550;
+	float LimiteIzquierdo = -1270.0;
+	float LimiteDerecho = 1520;
+
 public:
 	FORCEINLINE float GetVelocidad() const { return velocidad; }
 	FORCEINLINE float GetResistencia() const { return resistencia; }

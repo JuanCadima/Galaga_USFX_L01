@@ -5,6 +5,10 @@
 #include "NaveEnemiga.h"
 #include "NaveEnemigaTransporte.h"
 #include "NaveEnemigaCaza.h"
+#include "NaveEnemigaEspia.h"
+#include "NaveEnemigaReabastecimiento.h"
+#include "NaveEnemigaNodriza.h"
+
 #include "InventoryActor.h"
 #include "InventoryComponent.h"
 #include "CapsulaEnergia.h"
@@ -46,13 +50,13 @@ void AGalaga_USFX_L01GameMode::BeginPlay()
 	{
 		FVector ColocacionActual = ColocacionInicialNaves;
 
-		for (int i = 0; i < 7; i++) {
+		for (int i = 0; i < 5; i++) {
 
 			ColocacionActual = FVector(ColocacionActual.X + 250, ColocacionActual.Y + i, ColocacionActual.Z);
-			ANaveEnemigaCaza* NaveEnemigaAcorazadoExploracionActual = World->SpawnActor<ANaveEnemigaCaza>(ColocacionActual, rotacionNave);
-			TANavesEnemigas.Add(NaveEnemigaAcorazadoExploracionActual);
+			ANaveEnemigaCaza* NaveEnemigaCazaActual = World->SpawnActor<ANaveEnemigaCaza>(ColocacionActual, rotacionNave);
+			TANavesEnemigas.Add(NaveEnemigaCazaActual);
 
-			FString nombre04 = NaveEnemigaAcorazadoExploracionActual->GetNombre();
+			FString nombre04 = NaveEnemigaCazaActual->GetNombre();
 
 			FString nombreNave04 = FString::Printf(TEXT("%s %d"), *nombre04, i);
 			//Mensaje en pantalla
@@ -61,17 +65,17 @@ void AGalaga_USFX_L01GameMode::BeginPlay()
 				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, nombreNave04);
 			}
 
-			TMapCambiarVelocidad.Add(nombreNave04, NaveEnemigaAcorazadoExploracionActual);
+			TMapCambiarVelocidad.Add(nombreNave04, NaveEnemigaCazaActual);
 			TMapCambiarVelocidad[nombreNave04]->GetVelocidad();
 			TMapCambiarVelocidad[nombreNave04]->SetVelocidad(0.1);
 		}
 
-		for (int i = 0; i < 7; i++) {
+		for (int i = 0; i < 5; i++) {
 			ColocacionActual = FVector(ColocacionActual.X - 10, ColocacionActual.Y + 250, ColocacionActual.Z + 4);
-			ANaveEnemigaTransporte* NaveEnemigaTransporteMunicionesActual = World->SpawnActor<ANaveEnemigaTransporte>(ColocacionActual, rotacionNave);
-			TANavesEnemigas.Add(NaveEnemigaTransporteMunicionesActual);
+			ANaveEnemigaTransporte* NaveEnemigaTransporteMuniciones = World->SpawnActor<ANaveEnemigaTransporte>(ColocacionActual, rotacionNave);
+			TANavesEnemigas.Add(NaveEnemigaTransporteMuniciones);
 
-			FString nombre = NaveEnemigaTransporteMunicionesActual->GetNombre();
+			FString nombre = NaveEnemigaTransporteMuniciones->GetNombre();
 			FString nombreNave = FString::Printf(TEXT("%s %d"), *nombre, i);
 			//Mensaje en pantalla
 			if (GEngine)
@@ -79,46 +83,46 @@ void AGalaga_USFX_L01GameMode::BeginPlay()
 				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, nombreNave);
 			}
 
-			TMapCambiarVelocidad.Add(nombreNave, NaveEnemigaTransporteMunicionesActual);
+			TMapCambiarVelocidad.Add(nombreNave, NaveEnemigaTransporteMuniciones);
 			TMapCambiarVelocidad[nombreNave]->GetVelocidad();
 			TMapCambiarVelocidad[nombreNave]->SetVelocidad(0.1);//accedemos a la velocidad de la nave y la cambiamos; de este modo
 		}
 
-		//for (int i = 0; i < 7; i++) {
-		//	ColocacionActual = FVector(ColocacionActual.X - 60, ColocacionActual.Y - 270, ColocacionActual.Z);
-		//	ANaveEnemigaEspia* NaveEnemigaEspiaCamuflajeActual = World->SpawnActor<ANaveEnemigaEspiaCamuflaje>(ColocacionActual, rotacionNave);
-		//	TANavesEnemigas.Add(NaveEnemigaEspiaCamuflajeActual);
+		for (int i = 0; i < 5; i++) {
+			ColocacionActual = FVector(ColocacionActual.X - 60, ColocacionActual.Y - 270, ColocacionActual.Z);
+			ANaveEnemigaEspia* NaveEnemigaEspiaCamuflaje = World->SpawnActor<ANaveEnemigaEspia>(ColocacionActual, rotacionNave);
+			TANavesEnemigas.Add(NaveEnemigaEspiaCamuflaje);
 
-		//	FString nombre02 = NaveEnemigaEspiaCamuflajeActual->GetNombre();
-		//	FString nombreNave02 = FString::Printf(TEXT("%s %d"), *nombre02, i);
-		//	//Mensaje en pantalla
-		//	if (GEngine)
-		//	{
-		//		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, nombreNave02);
-		//	}
+			FString nombre02 = NaveEnemigaEspiaCamuflaje->GetNombre();
+			FString nombreNave02 = FString::Printf(TEXT("%s %d"), *nombre02, i);
+			//Mensaje en pantalla
+			if (GEngine)
+			{
+				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, nombreNave02);
+			}
 
-		//	TMapCambiarVelocidad.Add(nombreNave02, NaveEnemigaEspiaCamuflajeActual);
-		//	TMapCambiarVelocidad[nombreNave02]->GetVelocidad();
-		//	TMapCambiarVelocidad[nombreNave02]->SetVelocidad(0);
-		//}
+			TMapCambiarVelocidad.Add(nombreNave02, NaveEnemigaEspiaCamuflaje);
+			TMapCambiarVelocidad[nombreNave02]->GetVelocidad();
+			TMapCambiarVelocidad[nombreNave02]->SetVelocidad(1);
+		}
 
-		//for (int i = 0; i < 7; i++) {
-		//	ColocacionActual = FVector(ColocacionActual.X, ColocacionActual.Y - 150, ColocacionActual.Z);
-		//	ANaveEnemigaApoyoReparacion* NaveEnemigaApoyoReparacionActual = World->SpawnActor<ANaveEnemigaApoyoReparacion>(ColocacionActual, rotacionNave);
-		//	TANavesEnemigas.Add(NaveEnemigaApoyoReparacionActual);
+		for (int i = 0; i < 5; i++) {
+			ColocacionActual = FVector(ColocacionActual.X, ColocacionActual.Y - 150, ColocacionActual.Z);
+			ANaveEnemigaNodriza* NaveEnemigaNodriza01 = World->SpawnActor<ANaveEnemigaNodriza>(ColocacionActual, rotacionNave);
+			TANavesEnemigas.Add(NaveEnemigaNodriza01);
 
-		//	FString nombre05 = NaveEnemigaApoyoReparacionActual->GetNombre();
-		//	FString nombreNave05 = FString::Printf(TEXT("%s %d"), *nombre05, i);
-		//	//Mensaje en pantalla
-		//	if (GEngine)
-		//	{
-		//		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Orange, nombreNave05);
-		//	}
+			FString nombre05 = NaveEnemigaNodriza01->GetNombre();
+			FString nombreNave05 = FString::Printf(TEXT("%s %d"), *nombre05, i);
+			//Mensaje en pantalla
+			if (GEngine)
+			{
+				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Orange, nombreNave05);
+			}
 
-		//	TMapCambiarVelocidad.Add(nombreNave05, NaveEnemigaApoyoReparacionActual);
-		//	TMapCambiarVelocidad[nombreNave05]->GetVelocidad();
-		//	TMapCambiarVelocidad[nombreNave05]->SetVelocidad(49);
-		//}
+			TMapCambiarVelocidad.Add(nombreNave05, NaveEnemigaNodriza01);
+			TMapCambiarVelocidad[nombreNave05]->GetVelocidad();
+			TMapCambiarVelocidad[nombreNave05]->SetVelocidad(49);
+		}
 
 		//for (int i = 0; i < 7; i++) {
 		//	ColocacionActual = FVector(ColocacionActual.X + i + 100, ColocacionActual.Y + 300, ColocacionActual.Z + 3);
