@@ -1,0 +1,19 @@
+E:\Progamacion\Sis457\Galaga_USFX_L01-master\Galaga_USFX_L01-master\Intermediate\Build\Win64\UE4Editor\DebugGame\Galaga_USFX_L01\Definitions.Galaga_USFX_L01.h
+E:\Progamacion\Sis457\Galaga_USFX_L01-master\Galaga_USFX_L01-master\Source\Galaga_USFX_L01\NaveHelper.h
+E:\Progamacion\Sis457\Galaga_USFX_L01-master\Galaga_USFX_L01-master\Intermediate\Build\Win64\UE4Editor\Inc\Galaga_USFX_L01\NaveHelper.generated.h
+E:\Progamacion\Sis457\Galaga_USFX_L01-master\Galaga_USFX_L01-master\Source\Galaga_USFX_L01\Galaga_USFX_L01Projectile.h
+E:\Progamacion\Sis457\Galaga_USFX_L01-master\Galaga_USFX_L01-master\Intermediate\Build\Win64\UE4Editor\Inc\Galaga_USFX_L01\Galaga_USFX_L01Projectile.generated.h
+E:\Progamacion\Sis457\Galaga_USFX_L01-master\Galaga_USFX_L01-master\Source\Galaga_USFX_L01\Galaga_USFX_L01Pawn.h
+C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Engine\Classes\GameFramework/Character.h
+C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Engine\Classes\GameFramework/CharacterMovementReplication.h
+C:\Program Files\Epic Games\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\CharacterMovementReplication.generated.h
+C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Engine\Classes\GameFramework/RootMotionSource.h
+C:\Program Files\Epic Games\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\RootMotionSource.generated.h
+C:\Program Files\Epic Games\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\Character.generated.h
+E:\Progamacion\Sis457\Galaga_USFX_L01-master\Galaga_USFX_L01-master\Source\Galaga_USFX_L01\InventoryActor.h
+C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Engine\Classes\Engine/StaticMeshActor.h
+C:\Program Files\Epic Games\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\StaticMeshActor.generated.h
+E:\Progamacion\Sis457\Galaga_USFX_L01-master\Galaga_USFX_L01-master\Intermediate\Build\Win64\UE4Editor\Inc\Galaga_USFX_L01\InventoryActor.generated.h
+E:\Progamacion\Sis457\Galaga_USFX_L01-master\Galaga_USFX_L01-master\Source\Galaga_USFX_L01\InventoryComponent.h
+E:\Progamacion\Sis457\Galaga_USFX_L01-master\Galaga_USFX_L01-master\Intermediate\Build\Win64\UE4Editor\Inc\Galaga_USFX_L01\InventoryComponent.generated.h
+E:\Progamacion\Sis457\Galaga_USFX_L01-master\Galaga_USFX_L01-master\Intermediate\Build\Win64\UE4Editor\Inc\Galaga_USFX_L01\Galaga_USFX_L01Pawn.generated.h

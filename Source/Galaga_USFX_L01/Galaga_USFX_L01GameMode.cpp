@@ -62,7 +62,7 @@ void AGalaga_USFX_L01GameMode::BeginPlay()
 			//Mensaje en pantalla
 			if (GEngine)
 			{
-				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, nombreNave04);
+				//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, nombreNave04);
 			}
 
 			TMapCambiarVelocidad.Add(nombreNave04, NaveEnemigaCazaActual);
@@ -80,7 +80,7 @@ void AGalaga_USFX_L01GameMode::BeginPlay()
 			//Mensaje en pantalla
 			if (GEngine)
 			{
-				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, nombreNave);
+				//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, nombreNave);
 			}
 
 			TMapCambiarVelocidad.Add(nombreNave, NaveEnemigaTransporteMuniciones);
@@ -98,7 +98,7 @@ void AGalaga_USFX_L01GameMode::BeginPlay()
 			//Mensaje en pantalla
 			if (GEngine)
 			{
-				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, nombreNave02);
+				//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, nombreNave02);
 			}
 
 			TMapCambiarVelocidad.Add(nombreNave02, NaveEnemigaEspiaCamuflaje);
@@ -116,7 +116,7 @@ void AGalaga_USFX_L01GameMode::BeginPlay()
 			//Mensaje en pantalla
 			if (GEngine)
 			{
-				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Orange, nombreNave05);
+				//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Orange, nombreNave05);
 			}
 
 			TMapCambiarVelocidad.Add(nombreNave05, NaveEnemigaNodriza01);

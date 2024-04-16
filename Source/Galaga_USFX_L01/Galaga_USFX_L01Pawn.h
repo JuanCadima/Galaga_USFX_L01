@@ -8,6 +8,7 @@
 #include "InventoryComponent.h"
 #include "Galaga_USFX_L01Pawn.generated.h"
 
+class ANaveAyudante;
 UCLASS(Blueprintable)
 class AGalaga_USFX_L01Pawn : public APawn
 {
@@ -61,7 +62,7 @@ public:
 	static const FName FireForwardBinding;
 	static const FName FireRightBinding;
 
-private:
+public:
 
 	/* Flag to control firing  */
 	uint32 bCanFire : 1;
@@ -102,6 +103,9 @@ public:
 
 	TSubclassOf<class ABomba> BombaClass;
 	void LanzarBomba();
-};
 
- 
+	class ANaveAyudante* NaveAyudanteInstance;
+	void SpawnNaveAyudante();
+	
+
+};

@@ -13,7 +13,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Sound/SoundBase.h"
 #include "Bomba.h"
-
+#include "NaveAyudante.h"
 
 const FName AGalaga_USFX_L01Pawn::MoveForwardBinding("MoveForward");
 const FName AGalaga_USFX_L01Pawn::MoveRightBinding("MoveRight");
@@ -61,6 +61,7 @@ AGalaga_USFX_L01Pawn::AGalaga_USFX_L01Pawn()
 
 	Jumping = false;
 	DuracionSalto = 1.0f;
+	
 }
 
 void AGalaga_USFX_L01Pawn::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
@@ -77,6 +78,8 @@ void AGalaga_USFX_L01Pawn::SetupPlayerInputComponent(class UInputComponent* Play
 	PlayerInputComponent->BindAction("Teletransportacion", EInputEvent::IE_Pressed, this, &AGalaga_USFX_L01Pawn::Teletransportacion);
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &AGalaga_USFX_L01Pawn::Jump);
 	PlayerInputComponent->BindAction("LanzarBomba", IE_Pressed, this, &AGalaga_USFX_L01Pawn::LanzarBomba);
+
+	PlayerInputComponent->BindAction("SpawnNaveAyudante", IE_Pressed, this, &AGalaga_USFX_L01Pawn::SpawnNaveAyudante);
 }
 
 void AGalaga_USFX_L01Pawn::Tick(float DeltaSeconds)
@@ -113,6 +116,10 @@ void AGalaga_USFX_L01Pawn::Tick(float DeltaSeconds)
 
 	// Try and fire a shot
 	FireShot(FireDirection);
+	if (NaveAyudanteInstance)
+	{
+		NaveAyudanteInstance->SetFiringState(bCanFire);
+	}
 }
 
 void AGalaga_USFX_L01Pawn::FireShot(FVector FireDirection)
@@ -144,6 +151,7 @@ void AGalaga_USFX_L01Pawn::FireShot(FVector FireDirection)
 			}
 
 			bCanFire = false;
+			//SetFiringState(true);
 		}
 	}
 }
@@ -235,23 +243,52 @@ void AGalaga_USFX_L01Pawn::LanzarBomba()
 {
 	if (BombaClass)
 	{
-		float LaunchAngle = 25.0f;
-		float LaunchSpeed = 500.0f;
+		float LaunchAngle = 15.0f; // Ángulo de lanzamiento en el eje Z
+		float LaunchSpeed = 500.0f; // Velocidad de lanzamiento
 
-		float LaunchX = LaunchSpeed * FMath::Cos(FMath::DegreesToRadians(LaunchAngle));
-		float LaunchZ = LaunchSpeed * FMath::Sin(FMath::DegreesToRadians(LaunchAngle));
+		// Calcular la dirección del lanzamiento basado en la rotación actual de la nave
+		FVector LaunchDirection = GetActorForwardVector(); // Obtener el vector de dirección hacia adelante de la nave
+		LaunchDirection.Z += FMath::Tan(FMath::DegreesToRadians(LaunchAngle)); // Aplicar la inclinación en el eje Z
+
+		// Normalizar el vector de dirección del lanzamiento
+		LaunchDirection.Normalize();
+
+		// Calcular la velocidad de lanzamiento en función de la velocidad y la dirección del lanzamiento
+		FVector LaunchVelocity = LaunchDirection * LaunchSpeed;
+
+		FRotator SpawnRotation = GetActorRotation();
+
 		// Spawn the bomb
 		FActorSpawnParameters SpawnParams;
 		SpawnParams.Owner = this;
-		ABomba* Bomba = GetWorld()->SpawnActor<ABomba>(BombaClass, GetActorLocation(), GetActorRotation(), SpawnParams);
-		
-		float Gravity = 9.8f;
-		float DeltaTime = 0.16f;
-		LaunchZ -= Gravity * DeltaTime;
-		Bomba->LanzarBomba(FVector(LaunchX, 0, LaunchZ));
-		// Debug messages
-		UE_LOG(LogTemp, Warning, TEXT("LaunchX: %f, LaunchZ: %f"), LaunchX, LaunchZ);
+		ABomba* Bomba = GetWorld()->SpawnActor<ABomba>(BombaClass, GetActorLocation(), SpawnRotation, SpawnParams);
 
+		// Configurar la velocidad inicial de la bomba
+		Bomba->LanzarBomba(LaunchVelocity);
+
+		// Programar la caída de la bomba con un temporizador
+		float FallDelay = 2.0f; // Tiempo de retraso antes de que la bomba comience a caer (en segundos)
+		FTimerHandle TimerHandle_Fall;
+		GetWorld()->GetTimerManager().SetTimer(TimerHandle_Fall, [this, Bomba]()
+			{
+				// Iniciar la caída de la bomba en el eje Z con una velocidad hacia abajo
+				float FallSpeed = 100.0f; // Velocidad de caída de la bomba
+				Bomba->LanzarBomba(FVector(0, 0, -FallSpeed));
+			}, FallDelay, false);
+	}
+}
+
+void AGalaga_USFX_L01Pawn::SpawnNaveAyudante()
+{
+	// Spawn the helper ship
+	if (!NaveAyudanteInstance && GetWorld())
+	{
+		NaveAyudanteInstance = GetWorld()->SpawnActor<ANaveAyudante>(ANaveAyudante::StaticClass(), FTransform());
+		if (NaveAyudanteInstance)
+		{
+			// Set the player ship as the parent of the helper ship
+			NaveAyudanteInstance->SetNaveJugador(this);
+		}
 	}
 }
 

@@ -3,7 +3,7 @@
 
 #include "Bomba.h"
 #include "Components/StaticMeshComponent.h"
-
+#include "Components/SphereComponent.h"
 
 // Sets default values
 ABomba::ABomba()
@@ -14,6 +14,11 @@ ABomba::ABomba()
     // Create and attach the bomb mesh
     BombaMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("BombaMesh"));
     RootComponent = BombaMesh;
+
+    // Crear el componente de colisión esférica
+    CollisionComponent = CreateDefaultSubobject<USphereComponent>(TEXT("Collision"));
+    CollisionComponent->SetupAttachment(RootComponent);
+    CollisionComponent->OnComponentHit.AddDynamic(this, &ABomba::OnBombCollision);
 
     // Load the bomb mesh
     static ConstructorHelpers::FObjectFinder<UStaticMesh> BombaMeshAsset(TEXT("StaticMesh'/Game/StarterContent/Shapes/Shape_Trim_90_Out.Shape_Trim_90_Out'"));
@@ -30,6 +35,15 @@ ABomba::ABomba()
 void ABomba::LanzarBomba(const FVector Velocity)
 {
     BombaVelocity = Velocity;
+}
+
+void ABomba::OnBombCollision(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
+{
+    if (OtherActor != nullptr && OtherActor != this && OtherComp != nullptr)
+    {
+        // Destruir la bomba
+        Destroy();
+    }
 }
 
 // Called when the game starts or when spawned

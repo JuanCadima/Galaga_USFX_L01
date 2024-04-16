@@ -17,11 +17,15 @@ public:
 
 	void LanzarBomba(const FVector Velocity);
 
+	void OnBombCollision(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
+
 public:
 
 	class UStaticMeshComponent* BombaMesh;
+
 	FVector BombaVelocity;
 
+	class USphereComponent* CollisionComponent;
 
 protected:
 	// Called when the game starts or when spawned
